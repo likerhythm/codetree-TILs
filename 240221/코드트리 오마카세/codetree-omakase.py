@@ -11,6 +11,7 @@ belt = {}
 #time = t일때 belt 인덱스는 x = x - t(x-t==-1이면 x-t = L-1)
 time = 0
 customer = {}
+sushiSet = set()
 
 def eat():
     if belt != {}:
@@ -35,11 +36,11 @@ def eat():
                     if not belt[index]:
                         beltToDel.append(index)
                     customer[key]['n'] -= 1
-                    # print("eat")
+                    print("eat")
                     #다 먹은 경우 퇴장
                     if customer[key]['n'] == 0:
                         customerToDel.append(key)
-                        # print("del")
+                        print("del")
         for k in customerToDel:
             del(customer[k])
         for b in beltToDel:
@@ -50,14 +51,19 @@ def eat():
 for _ in range(Q):
     param = list(map(str, input().split()))
     method, t = param[0], int(param[1])
-    
+    print(method)
     #초밥 회전
-    if belt == {}:
+    if belt == {} or customer == {}:
         time = t
+        print(time)
     else:
         while t != time:
             time += 1
+            print(time)
             eat()
+            print("belt:", belt)
+            print("customer:", customer)
+            if 
     eat()
     # print("time:", time)
     # print("belt:", belt)
@@ -67,6 +73,7 @@ for _ in range(Q):
         #초밥 올리기
         case '100':
             x, name = int(param[2]), param[3]
+            sushiSet.add(name)
             index = x - t%L
             if index < 0:
                 index = L - (t%L-x)
