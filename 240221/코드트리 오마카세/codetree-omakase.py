@@ -86,6 +86,7 @@ for _ in range(Q):
             eat()
         #사진 촬영
         case '300':
+            print('300')
             sushi = 0
             for index in belt:
                 for key in belt[index].keys():
