@@ -7,30 +7,42 @@ from collections import defaultdict as dfd
 
 #벨트 길이, 명령 수
 L, Q = map(int, input().split())
-belt = [[] for _ in range(L)]
+belt = {}
 #time = t일때 belt 인덱스는 x = x - t(x-t==-1이면 x-t = L-1)
 time = 0
 customer = {}
 
 def eat():
     #초밥 먹기
-    keyToDel = []
+    customerToDel = []
+    beltToDel = []
     for key in customer.keys():
         x = customer[key]['x']
         index = x - t%L
         if index < 0:
             index = L - (t%L-x)
         #본인 초밥이 있으면 먹기
-        while key in belt[index]:
-            belt[index].remove(key)
-            customer[key]['n'] -= 1
-            # print("eat")
-            #다 먹은 경우 퇴장
-            if customer[key]['n'] == 0:
-                keyToDel.append(key)
-                # print("del")
-    for k in keyToDel:
+        index = str(index)
+        # print(index, index in belt)
+        if index in belt:
+            while key in belt[index]:
+                #초밥 먹기
+                belt[index][key] -= 1
+                if belt[index][key] == 0:
+                    del(belt[index][key])
+                #한 칸에 있는 초밥 모두 먹은 경우
+                if not belt[index]:
+                    beltToDel.append(index)
+                customer[key]['n'] -= 1
+                # print("eat")
+                #다 먹은 경우 퇴장
+                if customer[key]['n'] == 0:
+                    customerToDel.append(key)
+                    # print("del")
+    for k in customerToDel:
         del(customer[k])
+    for b in beltToDel:
+        del(belt[b])
 
 
 
@@ -54,7 +66,14 @@ for _ in range(Q):
             index = x - t%L
             if index < 0:
                 index = L - (t%L-x)
-            belt[index].append(name)
+            index = str(index)
+            if index in belt:
+                if name in belt[index]:
+                    belt[index][name] += 1
+                else:
+                    belt[index][name] = 1
+            else:
+                belt[index] = {name: 1}
             eat()
         #손님 입장
         case '200':
@@ -64,6 +83,7 @@ for _ in range(Q):
         #사진 촬영
         case '300':
             sushi = 0
-            for arr in belt:
-                sushi += len(arr)
+            for index in belt:
+                for key in belt[index].keys():
+                    sushi += belt[index][key]
             print(len(customer), sushi)
