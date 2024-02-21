@@ -21,7 +21,7 @@ def eat():
         if index < 0:
             index = L - (t%L-x)
         #본인 초밥이 있으면 먹기
-        if key in belt[index]:
+        while key in belt[index]:
             belt[index].remove(key)
             customer[key]['n'] -= 1
             # print("eat")
