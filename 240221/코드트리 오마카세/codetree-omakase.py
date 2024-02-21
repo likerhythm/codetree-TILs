@@ -13,36 +13,37 @@ time = 0
 customer = {}
 
 def eat():
-    #초밥 먹기
-    customerToDel = []
-    beltToDel = []
-    for key in customer.keys():
-        x = customer[key]['x']
-        index = x - t%L
-        if index < 0:
-            index = L - (t%L-x)
-        #본인 초밥이 있으면 먹기
-        index = str(index)
-        # print(index, index in belt)
-        if index in belt:
-            while key in belt[index]:
-                #초밥 먹기
-                belt[index][key] -= 1
-                if belt[index][key] == 0:
-                    del(belt[index][key])
-                #한 칸에 있는 초밥 모두 먹은 경우
-                if not belt[index]:
-                    beltToDel.append(index)
-                customer[key]['n'] -= 1
-                # print("eat")
-                #다 먹은 경우 퇴장
-                if customer[key]['n'] == 0:
-                    customerToDel.append(key)
-                    # print("del")
-    for k in customerToDel:
-        del(customer[k])
-    for b in beltToDel:
-        del(belt[b])
+    if belt != {}:
+        #초밥 먹기
+        customerToDel = []
+        beltToDel = []
+        for key in customer.keys():
+            x = customer[key]['x']
+            index = x - t%L
+            if index < 0:
+                index = L - (t%L-x)
+            #본인 초밥이 있으면 먹기
+            index = str(index)
+            # print(index, index in belt)
+            if index in belt:
+                while key in belt[index]:
+                    #초밥 먹기
+                    belt[index][key] -= 1
+                    if belt[index][key] == 0:
+                        del(belt[index][key])
+                    #한 칸에 있는 초밥 모두 먹은 경우
+                    if not belt[index]:
+                        beltToDel.append(index)
+                    customer[key]['n'] -= 1
+                    # print("eat")
+                    #다 먹은 경우 퇴장
+                    if customer[key]['n'] == 0:
+                        customerToDel.append(key)
+                        # print("del")
+        for k in customerToDel:
+            del(customer[k])
+        for b in beltToDel:
+            del(belt[b])
 
 
 
