@@ -52,9 +52,12 @@ for _ in range(Q):
     method, t = param[0], int(param[1])
     
     #초밥 회전
-    while t != time:
-        time += 1
-        eat()
+    if belt == {}:
+        time = t
+    else:
+        while t != time:
+            time += 1
+            eat()
     eat()
     # print("time:", time)
     # print("belt:", belt)
