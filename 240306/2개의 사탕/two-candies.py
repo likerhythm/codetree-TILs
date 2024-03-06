@@ -23,7 +23,7 @@ visited = [[rn, rm, bn, bm]]
 while queue:
     t_rn, t_rm, t_bn, t_bm, cnt = queue.popleft()
     for i in range(4):
-        if cnt > 10:
+        if cnt == 10:
             print(-1)
             exit(0)
         #파란 사탕 굴리기
