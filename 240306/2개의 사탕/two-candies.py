@@ -56,3 +56,4 @@ while queue:
         if [next_rn, next_rm, next_bn, next_bm] not in visited:
             queue.append((next_rn, next_rm, next_bn, next_bm, cnt + 1))
             visited.append([next_rn, next_rm, next_bn, next_bm])
+print(-1)
