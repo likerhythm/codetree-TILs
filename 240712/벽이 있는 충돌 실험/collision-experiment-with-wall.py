@@ -1,4 +1,6 @@
 # 아주 오랜 시간이 흐른 후 -> 연속 2n
+import sys
+input = sys.stdin.readline
 
 T = int(input())
 
@@ -50,8 +52,7 @@ for _ in range(T):
         has_conflict = False
         for x in range(N):
             for y in range(N):
-                # 충돌이 발생한 경우
-                if next_arr[x][y][0] > 1:
+                if next_arr[x][y][0] > 1: # 충돌이 발생한 경우
                     next_arr[x][y][0] = 0
                     has_conflict = True
                     count = 0
