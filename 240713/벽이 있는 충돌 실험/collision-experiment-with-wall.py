@@ -33,7 +33,6 @@ for _ in range(T):
     while True:
         has_conflict = False
         arr = [[[] for _ in range(N)] for _ in range(N)]
-        print_arr = [[[0, 0] for _ in range(N)] for _ in range(N)]
         conflict_arr = []
         # 구슬 이동
         for i in range(len(marbles)):
