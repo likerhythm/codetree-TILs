@@ -27,7 +27,7 @@ for _ in range(T):
 
     print_arr = [[[0, 0] for _ in range(N)] for _ in range(N)]
 
-    marble_cnt = M
+    
     has_conflict = False
     task = 0
     while True:
@@ -60,11 +60,14 @@ for _ in range(T):
             conflict_marbles = arr[x][y]
             for i in conflict_marbles:
                 marbles[i][2] = -1 # 구슬 제거
-                marble_cnt -= 1
         
         if not has_conflict:
             task += 1
         
         if task > 2 * N + 2:
             break
+    marble_cnt = 0
+    for x, y, d in marbles:
+        if d != -1:
+            marble_cnt += 1
     print(marble_cnt)
