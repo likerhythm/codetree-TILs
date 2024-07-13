@@ -42,8 +42,9 @@ for _ in range(T):
             nx = x + dxs[d]
             ny = y + dys[d]
             if in_range(nx, ny, N):
-                if len(arr[nx][ny]) > 0:          #이미 구슬이 칸을 점유하는 경우
-                    conflict_arr.append([nx, ny]) # 충돌 칸 저장
+                if len(arr[nx][ny]) > 0:          # 이미 구슬이 칸을 점유하는 경우
+                    if len(arr[nx][ny]) == 1:
+                        conflict_arr.append([nx, ny]) # 충돌 칸 저장
                     has_conflict = True
                     task = 0
                 arr[nx][ny].append(i) # 해당 칸에 구슬의 index 추가
@@ -58,7 +59,7 @@ for _ in range(T):
         for x, y in conflict_arr:
             conflict_marbles = arr[x][y]
             for i in conflict_marbles:
-                marbles[i][2] = -1 # 구슬 제거    
+                marbles[i][2] = -1 # 구슬 제거
                 marble_cnt -= 1
         
         if not has_conflict:
