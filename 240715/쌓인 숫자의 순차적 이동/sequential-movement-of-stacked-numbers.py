@@ -43,21 +43,15 @@ for num in num_order:
     if max_num == 0:
         continue
     
-    # print(f'num={num}')
     # index 수정
     new_index = len(arr[rx][ry])
     for i in range(len(arr[x][y][index:])):
         temp = arr[x][y][index + i]
         num_index[temp] = [rx, ry, new_index + i]
-        # print(f'num_index[{temp}]=[{rx}, {ry}, {new_index+i}]')
 
     # 숫자들 옮기기
     arr[rx][ry].extend(arr[x][y][index:])
     arr[x][y] = arr[x][y][:index]
-    
-    
-    # print(num_index[4])
-    # print_arr(arr)
 
 for i in range(n):
     for j in range(n):
