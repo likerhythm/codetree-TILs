@@ -1,6 +1,6 @@
 K, N = map(int, input().split())
 
-answer = [1, 1]
+answer = [1 for _ in range(N)]
 
 def print_num(curr_num):
     if curr_num == N:
