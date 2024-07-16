@@ -16,12 +16,14 @@ answer = [0 for _ in range(n)]
 def f(previous, curr):
     global min_r
     if curr == n:
+        # print(f'answer={answer}')
         r = calc()# 합의 차 계산
+        # print(f'r={r}')
         min_r = min(r, min_r)
         return
     for i in range(previous, 2 * n):
         answer[curr] = i
-        f(previous + 1, curr + 1)
+        f(i + 1, curr + 1)
 
 f(0, 0)
 print(min_r)
