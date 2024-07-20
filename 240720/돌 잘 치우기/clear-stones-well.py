@@ -10,7 +10,8 @@ arr = [list(map(int, input().split())) for _ in range(n)]
 
 start_points = []
 for _ in range(k):
-    start_points.append(list(map(int, input().split())))
+    x, y = map(int, input().split())
+    start_points.append([x - 1, y - 1])
 
 block_points = []
 for i in range(n):
@@ -21,7 +22,10 @@ for i in range(n):
 dxs = [-1, 0, 1, 0]
 dys = [0, 1, 0, -1]
 
-remove = [] #  제거할 돌 목록
+remove = [] #  제거할 돌의 block_points index
+
+def can_go(x, y):
+    return arr[x][y] == 0 or ([x, y] in remove)
 
 def bfs(x, y, visited):
     q = deque([[x, y]])
@@ -32,7 +36,7 @@ def bfs(x, y, visited):
         for dx, dy in zip(dxs, dys):
             nx = x + dx
             ny = y + dy
-            if 0 <= nx < n and 0 <= ny < n and not visited[nx][ny] and arr[nx][ny] == 0:
+            if 0 <= nx < n and 0 <= ny < n and not visited[nx][ny] and can_go(nx, ny):
                 visited[nx][ny] = True
                 q.append([nx, ny])
                 cnt += 1
@@ -40,17 +44,19 @@ def bfs(x, y, visited):
 
 
 # 0 ~ len(block_points)-1 중 m개 선택
-
 max_cnt = 0
 def set_remove():
+    global max_cnt
     if len(remove) == m:
+        cnt = 0
         visited = [[False] * n for _ in range(n)]
         for x, y in start_points:
-            cnt += bfs(x, y, visited) # bfs
+            if not visited[x][y]:
+                cnt += bfs(x, y, visited) # bfs
         max_cnt = max(max_cnt, cnt)
         return
     for i in range(len(block_points)):
-        remove.append(i)
+        remove.append(block_points[i])
         set_remove()
         remove.pop()
 
