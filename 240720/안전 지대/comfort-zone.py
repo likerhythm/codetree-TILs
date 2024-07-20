@@ -22,7 +22,7 @@ def dfs(x, y, k):
             dfs(nx, ny, k)
 
 answer_cnt = 0
-answer_k = 0
+answer_k = 1
 for k in range(1, max_height):
     cnt = 0 # 안전 영역의 수
     visited = [[False] * M for _ in range(N)]
