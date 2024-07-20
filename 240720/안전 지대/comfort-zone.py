@@ -1,5 +1,8 @@
 # dfs 시간복잡도: N*M
 # 100번 반복
+import sys
+sys.setrecursionlimit(3000)
+
 
 N, M = map(int, input().split())
 
