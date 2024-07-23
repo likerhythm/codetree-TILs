@@ -10,4 +10,5 @@ if n > 2:
             dp[i] += dp[i - 2]
         if dp[i - 3] > 0:
             dp[i] += dp[i - 3]
+        dp[i] %=10007
 print(dp[-1])
