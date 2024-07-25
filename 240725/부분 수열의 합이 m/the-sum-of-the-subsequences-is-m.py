@@ -15,4 +15,4 @@ for coin in coins:
 if dp[-1] == INT_MAX:
     print(-1)
 else:
-    print(dp)
+    print(dp[-1])
