@@ -3,7 +3,7 @@ B = input()
 len_A = len(A)
 len_B = len(B)
 
-dp = [[0] * len_A for _ in range(len_B)]
+dp = [[0] * len_B for _ in range(len_A)]
 
 if A[0] == B[0]:
     dp[0][0] = 1
