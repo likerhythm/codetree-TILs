@@ -72,11 +72,16 @@ def fill():
             if arr[i][j] == 0:
                 arr[i][j] = pieces[pieces_cursor]
                 pieces_cursor += 1
+    # print('fill')
+    # print_arr()
+    # print()
 
 def print_arr():
     for i in range(5):
         print(*arr[i])
 
+
+# print_arr()
 for k in range(K): # k번째 턴
     max_value = 0
     next_arr = []
@@ -86,8 +91,8 @@ for k in range(K): # k번째 턴
     result_x = 0 # 최대 가치일 때 중심 x
     result_y = 0 # 최대 가치일 때 중심 y
     for radius in range(90, 271, 90):
-        for i in range(1, 4): # 회전을 통해 최대 유물 가치 구하기
-            for j in range(1, 4):
+        for j in range(1, 4): # 회전을 통해 최대 유물 가치 구하기
+            for i in range(1, 4):
                 total_value, total_removed, temp_arr = rotate(i, j, radius)
                 if max_value < total_value:
                     max_value = total_value
@@ -104,7 +109,9 @@ for k in range(K): # k번째 턴
             arr[x][y] = next_arr[x][y]
     for x, y in next_removed:
             arr[x][y] = 0
+    # print(f'{result_x}, {result_y}에서 {result_radius}만큼 회전')
     # print_arr()
+    # print(f'value={max_value}')
     # 빈 자리에 조각 채우기
     fill()
 
@@ -118,9 +125,12 @@ for k in range(K): # k번째 턴
             break
         for x, y in extra_removed:
             arr[x][y] = 0
+        # print_arr()
+        # print(f'extra_value={extra_value}')
         max_value += extra_value
         fill()
-    print(max_value, end=' ')
+    # print(f'max_value={max_value}')
     # print_arr()
     # print(f'{k}턴 끝')
     # print()
+    print(max_value, end=' ')
