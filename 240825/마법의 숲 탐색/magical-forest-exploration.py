@@ -73,26 +73,26 @@ def clear():
 def set_neighbor(exit_r, exit_c, num):
     drs = [-1, 0, 1, 0] # 북, 동, 남, 서
     dcs = [0, 1, 0, -1]
-    nei_set = set()
+    nei_set = set() # 이웃 골렘이 여러개인 경우를 고려
     for dr, dc in zip(drs, dcs): # 출구 주변에 인접한 골렘 확인
         nr = exit_r + dr
         nc = exit_c + dc
         if 0 <= nr < R + 3 and 0 <= nc < C:
             neighbor = forest[nr][nc]
-            # print(f'neighbor={neighbor}')
-            if neighbor > 0 and neighbor != num + 1:
-                nei_set.add(neighbor) # 이웃 골렘이 여러개인 경우를 고려
-                for nei in nei_set:
-                    nei_r, nei_c, nei_d = golems[nei - 1]
-                    tmp_forest[nei_r][nei_c] = 1
-                    for dr, dc in zip(drs, dcs):
-                        nr_ = nei_r + dr
-                        nc_ = nei_c + dc
-                        tmp_forest[nr_][nc_] = 1 # 이동 가능한 모든 구간을 1로 설정
-                    d = golems[nei - 1][2]
-                    nei_exit_r = nei_r + exit[d][0]
-                    nei_exit_c = nei_c + exit[d][1]
-                    set_neighbor(nei_exit_r, nei_exit_c, neighbor - 1)
+            if neighbor > 0 and neighbor != num + 1 and tmp_forest[nr][nc] == 0:
+                nei_set.add(neighbor) 
+    # print(f'num={num}, nei_set={nei_set}')
+    for nei in nei_set:
+        nei_r, nei_c, nei_d = golems[nei - 1]
+        tmp_forest[nei_r][nei_c] = 1
+        for dr, dc in zip(drs, dcs):
+            nr_ = nei_r + dr
+            nc_ = nei_c + dc
+            tmp_forest[nr_][nc_] = 1 # 이동 가능한 모든 구간을 1로 설정
+        d = golems[nei - 1][2]
+        nei_exit_r = nei_r + exit[d][0]
+        nei_exit_c = nei_c + exit[d][1]
+        set_neighbor(nei_exit_r, nei_exit_c, neighbor - 1)
 
 answer = []
 for num, golem in enumerate(golems):
