@@ -6,6 +6,7 @@
 
 import sys
 input = sys.stdin.readline
+sys.setrecursionlimit(10000)
 
 node_info = [[0, 0] for _ in range(100001)] # color, maxdepth
 parent_info = [0] * 100001 # pid
