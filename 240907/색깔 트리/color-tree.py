@@ -12,29 +12,42 @@ node_info = [[0, 0] for _ in range(100001)] # color, maxdepth
 parent_info = [0] * 100001 # pid
 child_info = [[] for _ in range(100001)] # mids
 
-def calc_max_depth(p_id):
-    cnt = 1 # min(max_depth - limit)이 0보다 커야함.
-    min_value = 100001
-    while True:
-        if p_id == -1:
-            break
-        now_max_depth = node_info[p_id][1]
-        min_value = min(min_value, now_max_depth - cnt)
-        cnt += 1
-        p_id = parent_info[p_id]
-    if min_value > 0:
+def calc_max_depth(m_id, p_id, depth):
+    min_depth = min(depth, node_info[p_id][1] - 1)
+    if min_depth > 0:
+        node_info[m_id][1] = min_depth
         return True
     else:
         return False
+    
+
+    # cnt = 1 # min(max_depth - limit)이 0보다 커야함.
+    # min_value = 100001
+    # while True:
+    #     if p_id == -1:
+    #         break
+    #     now_max_depth = node_info[p_id][1]
+    #     min_value = min(min_value, now_max_depth - cnt)
+    #     cnt += 1
+    #     p_id = parent_info[p_id]
+    # if min_value > 0:
+    #     return True
+    # else:
+    #     return False
 
 def add_node(m_id, p_id, color, max_depth): # 최종 루트 노드까지 parent 노드들을 탐색하며 가능한 maxdepth 계산. min(현재 노드의 maxdepth - cnt) > 0이면 노드 추가 가능
-    flag = calc_max_depth(p_id)
-    if flag == False: # 노드를 추가할 수 없는 경우
-        return
-    node_info[m_id][0] = color
-    node_info[m_id][1] = max_depth
-    parent_info[m_id] = p_id
-    child_info[p_id].append(m_id)
+    if p_id == -1:
+        node_info[m_id][0] = color
+        node_info[m_id][1] = max_depth
+        parent_info[m_id] = p_id  
+    else:  
+        flag = calc_max_depth(m_id, p_id, max_depth)
+        if flag == False: # 노드를 추가할 수 없는 경우
+            return
+        node_info[m_id][0] = color
+        # node_info[m_id][1] = max_depth
+        parent_info[m_id] = p_id
+        child_info[p_id].append(m_id)
     
 def change_color(m_id, color): # mid 노드를 루트 노드로 하는 서브트리의 노드 mid 반환
     node_info[m_id][0] = color
