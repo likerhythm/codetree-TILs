@@ -1,5 +1,6 @@
 n, m, k, c = map(int, input().split())
-graph = [list(map(int, input().split())) for _ in range(n)]
+graph = [list(map(int, input().split())) for _ in range(n)] # 나무, 벽 graph
+kill_graph = [[0] * n for _ in range(n)] # 제초제 graph
 walls = set()
 for i in range(n):
     for j in range(n):
@@ -41,7 +42,7 @@ def breed(): # 나무 번식
                 for dx, dy in zip(dxs, dys):
                     nx = x + dx
                     ny = y + dy
-                    if in_range(nx, ny) and graph[nx][ny] == 0:
+                    if in_range(nx, ny) and graph[nx][ny] == 0 and kill_graph[nx][ny] == 0:
                         target.append([nx, ny])
                         cnt += 1
                 if cnt > 0:
@@ -87,9 +88,9 @@ def kill(): # 제초제
                     max_cnt = cnt
                     result_x, result_y = x, y
     # result에 제초제 뿌리기
-    # print(f'kill {result_x}, {result_y}')
     ignore = set()
-    graph[result_x][result_y] = KILL
+    # print(f'kill {result_x}, {result_y}')
+    kill_graph[result_x][result_y] = KILL
     for i in range(1, k + 1):
         for j in range(4):
             if j in ignore:
@@ -98,25 +99,30 @@ def kill(): # 제초제
             nx = result_x + dx * i
             ny = result_y + dy * i
             if in_range(nx, ny):
-                if graph[nx][ny] == 0 or graph[nx][ny] == WALL: # 벽이거나 빈 공간인 경우
-                    graph[nx][ny] = KILL
+                if graph[nx][ny] == 0 or (nx, ny) in walls: # 빈 공간이거나 벽인 경우
+                    kill_graph[nx][ny] = KILL
                     ignore.add(j)
-                else:
-                    graph[nx][ny] = KILL
+                elif graph[nx][ny] > 0 : # 나무인 경우
+                    kill_graph[nx][ny] = KILL
+    for i in range(n):
+        for j in range(n):
+            if kill_graph[i][j] < 0 and (i, j) not in walls:
+                graph[i][j] = 0
+                
     return max_cnt
 
 def print_graph():
     for i in range(n):
         print(*graph[i])
-    print()
+    # print()
 
 answer = 0
 # print_graph()
 for _ in range(m):
     for i in range(n):
         for j in range(n):
-            if graph[i][j] < 0 and (i, j) not in walls:
-                graph[i][j] += 1
+            if kill_graph[i][j] < 0:
+                kill_graph[i][j] += 1
     
     # print('grow')
     grow()
